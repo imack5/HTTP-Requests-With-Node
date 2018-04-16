@@ -1,11 +1,15 @@
 var https = require('https');
 
-function getHTML (options, callback) {
+function getAndPrintHTMLChunks () {
 
+  var requestOptions = {
+    host: 'sytantris.github.io',
+    path: '/http-examples/step2.html'
+  };
 
   var fullDataSet = '';
 
-  https.get(options, function (response) {
+  https.get(requestOptions, function (response) {
 
     // set encoding of received data to UTF-8
     response.setEncoding('utf8');
@@ -21,20 +25,11 @@ function getHTML (options, callback) {
     // (the `end` of the stream)
     response.on('end', function() {
       console.log('Response stream complete.');
-      callback('Full data set received: ' + fullDataSet)
+      console.log('Full data set received: ', fullDataSet)
     });
 
   });
 
 }
 
-function printHTML (html){
-  console.log(html);
-}
-
-var requestOptions = {
-  host: 'sytantris.github.io',
-  path: '/http-examples/step4.html'
-};
-
-getHTML(requestOptions, printHTML);
+getAndPrintHTMLChunks();
